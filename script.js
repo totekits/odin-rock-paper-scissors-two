@@ -19,7 +19,7 @@ function getHumanChoice() {
   if (input === null) {
     return null;
   }
-  input = input.toLocaleLowerCase().trim();
+  input = input.toLowerCase().trim();
   if (input === `rock` || input === `paper` || input === `scissors`) {
     return input;
   } else { 
@@ -27,8 +27,6 @@ function getHumanChoice() {
     return getHumanChoice();
   }
 }
-
-console.log(getHumanChoice());
 
 /* create humanScore and computerScore
 to keep track of the players score */
@@ -57,10 +55,29 @@ function playRound(humanChoice, computerChoice) {
   } else if (humanChoice === `scissors` && computerChoice === `rock`) {
     console.log(`You lose! Rock beats Scissors`)
     computerScore++;
+  } else if (humanChoice === null) {
+    console.log(`Game cancelled`);
+    return;
   }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+/* write the logic to play the entire game */
+function playGame() {
+  for (let i = 0; i < 5; i++) {
+    let computerSelection = getComputerChoice();
+    let humanSelection = getHumanChoice();
+    playRound(humanSelection, computerSelection);
+  }
+  console.log(`Final Score => Human: ${humanScore} Computer: ${computerScore}`);
+  if (humanScore === computerScore) {
+    console.log(`It's a draw!`);
+  } else if (humanScore > computerScore) {
+    console.log(`You win!`);
+  } else {
+    console.log(`You lose!`);
+  }
+  humanScore = 0;
+  computerScore = 0;
+}
 
-playRound(humanSelection, computerSelection);
+playGame()
